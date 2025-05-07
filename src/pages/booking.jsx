@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Appshell from "../components/appshell";
 import { getUserLogin } from "../utils/utils";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Alert, useHandleAlert } from "sstra-alert";
 
 const BookingSection = () => {
@@ -44,6 +44,11 @@ const BookingSection = () => {
 
   const user = getUserLogin();
   const navigate = useNavigate();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const layanan = queryParams.get("layanan");
+
+  console.log({ layanan });
 
   const { status, data, handleAlert } = useHandleAlert();
 
@@ -122,7 +127,7 @@ const BookingSection = () => {
   };
 
   const renderDynamicFields = () => {
-    switch (serviceType) {
+    switch (serviceType || layanan) {
       case "tari":
         return (
           <>
@@ -187,7 +192,6 @@ const BookingSection = () => {
                 }
                 min="1"
                 max="20"
-                defaultValue="5"
                 required
               />
             </div>
@@ -388,6 +392,12 @@ const BookingSection = () => {
         return null;
     }
   };
+
+  useEffect(() => {
+    if (layanan) {
+      setServiceType(layanan);
+    }
+  }, [layanan]);
 
   return (
     <Appshell>
