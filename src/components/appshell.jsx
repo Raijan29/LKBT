@@ -10,14 +10,14 @@ export default function Appshell({ children }) {
     window.scrollTo(0, 0);
   }, []);
 
+  const notFooter = ["/login", "/daftar", "/", "/booking", "/booking/riwayat"];
+
   return (
     <div className="min-h-screen flex flex-col">
       <Headers />
       {children}
 
-      {pathname !== "/login" && pathname !== "/daftar" && pathname !== "/" && (
-        <Footer />
-      )}
+      {!notFooter.includes(pathname) && <Footer />}
     </div>
   );
 }

@@ -4,6 +4,8 @@ import { getUserLogin } from "../utils/utils";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Alert, useHandleAlert } from "sstra-alert";
 
+import { FaClipboardList } from "react-icons/fa";
+
 const BookingSection = () => {
   const [serviceType, setServiceType] = useState("");
   const [formData, setFormData] = useState({
@@ -48,7 +50,7 @@ const BookingSection = () => {
   const queryParams = new URLSearchParams(location.search);
   const layanan = queryParams.get("layanan");
 
-  console.log({ layanan });
+  console.log({ user });
 
   const { status, data, handleAlert } = useHandleAlert();
 
@@ -76,6 +78,7 @@ const BookingSection = () => {
 
     let dataBooking = {
       ...formData,
+      userId: user.id,
       type: serviceType,
       email: user.email,
       nama: user.nama,
@@ -118,6 +121,7 @@ const BookingSection = () => {
         break;
     }
 
+    console.log({ dataBooking });
     setTimeout(() => {
       handleAlert(
         "success",
@@ -411,6 +415,15 @@ const BookingSection = () => {
       <div>
         <main className="py-5">
           <div className="container mx-auto px-4">
+            <div className="w-full  flex flex-row-reverse">
+              <button
+                onClick={() => navigate("riwayat")}
+                className="flex items-center gap-2 cursor-pointer"
+              >
+                <FaClipboardList className="text-purple-500" size={22} />
+                <p className="text-purple-600">Riwayat</p>
+              </button>
+            </div>
             <div className="flex justify-center">
               <div className="w-full lg:w-8/12">
                 <img

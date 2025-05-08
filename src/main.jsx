@@ -10,6 +10,7 @@ import DaftarSection from "./pages/auth/daftar.jsx";
 import BookingPage from "./pages/booking.jsx";
 import PrivateRoute from "./components/privateRoute.jsx";
 import Kontak from "./pages/kontak.jsx";
+import Riwayat from "./pages/riwayat.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -26,6 +27,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         {/* footer */}
         <Route element={<PrivateRoute />}>
           <Route path="/booking" element={<BookingPage />} />
+          <Route path="/booking/riwayat" element={<Riwayat />} />
         </Route>
       </Routes>
     </BrowserRouter>
