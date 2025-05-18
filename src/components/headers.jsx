@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import { getUserLogin } from "../utils/utils";
 
@@ -9,6 +9,14 @@ export default function Headers() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setTimeout(() => {
+      navigate("/login");
+    }, 1500);
+  };
 
   const ListLink = ({ link, title }) => {
     return (
@@ -42,12 +50,15 @@ export default function Headers() {
           <div className="hidden lg:flex items-center space-x-8">
             <ListLink link="/" title="Home" />
             <ListLink link="/layanan" title="Layanan" />
-            <ListLink link="/booking" title="Booking" />
+            {user && <ListLink link="/booking" title="Booking" />}
             <ListLink link="/tentang" title="Tentang" />
             <ListLink link="/kontak" title="Kontak" />
 
             {isMenuOpen && (
-              <button className="absolute p-3 rounded-md z-20 top-[60px] right-[50px] bg-gray-700 flex justify-center items-center gap-1 hover:bg-gray-600 duration-200">
+              <button
+                className="absolute p-3 rounded-md z-20 top-[60px] right-[50px] bg-gray-700 flex justify-center items-center gap-1 hover:bg-gray-600 duration-200"
+                onClick={handleLogout}
+              >
                 <IoLogOutOutline color="white" size={23} />
                 <p className="text-[.9rem] text-red-500">Logout</p>
               </button>

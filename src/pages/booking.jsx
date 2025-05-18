@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Appshell from "../components/appshell";
 import { getUserLogin } from "../utils/utils";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Alert, useHandleAlert } from "sstra-alert";
+
+import { FaClipboardList } from "react-icons/fa";
 
 const BookingSection = () => {
   const [serviceType, setServiceType] = useState("");
@@ -44,6 +46,11 @@ const BookingSection = () => {
 
   const user = getUserLogin();
   const navigate = useNavigate();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const layanan = queryParams.get("layanan");
+
+  console.log({ user });
 
   const { status, data, handleAlert } = useHandleAlert();
 
@@ -71,6 +78,7 @@ const BookingSection = () => {
 
     let dataBooking = {
       ...formData,
+      userId: user.id,
       type: serviceType,
       email: user.email,
       nama: user.nama,
@@ -113,6 +121,7 @@ const BookingSection = () => {
         break;
     }
 
+    console.log({ dataBooking });
     setTimeout(() => {
       handleAlert(
         "success",
@@ -122,7 +131,7 @@ const BookingSection = () => {
   };
 
   const renderDynamicFields = () => {
-    switch (serviceType) {
+    switch (serviceType || layanan) {
       case "tari":
         return (
           <>
@@ -187,7 +196,6 @@ const BookingSection = () => {
                 }
                 min="1"
                 max="20"
-                defaultValue="5"
                 required
               />
             </div>
@@ -389,6 +397,12 @@ const BookingSection = () => {
     }
   };
 
+  useEffect(() => {
+    if (layanan) {
+      setServiceType(layanan);
+    }
+  }, [layanan]);
+
   return (
     <Appshell>
       <Alert
@@ -401,6 +415,15 @@ const BookingSection = () => {
       <div>
         <main className="py-5">
           <div className="container mx-auto px-4">
+            <div className="w-full  flex flex-row-reverse">
+              <button
+                onClick={() => navigate("riwayat")}
+                className="flex items-center gap-2 cursor-pointer"
+              >
+                <FaClipboardList className="text-purple-500" size={22} />
+                <p className="text-purple-600">Riwayat</p>
+              </button>
+            </div>
             <div className="flex justify-center">
               <div className="w-full lg:w-8/12">
                 <img
