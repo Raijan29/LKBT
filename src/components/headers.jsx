@@ -6,6 +6,7 @@ import { IoLogOutOutline } from "react-icons/io5";
 
 export default function Headers() {
   const user = getUserLogin();
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const { pathname } = useLocation();
@@ -48,11 +49,15 @@ export default function Headers() {
             <p className="">LEMBAGA KESENIAN BUNGA TANJUNG</p>
           </div>
           <div className="hidden lg:flex items-center space-x-8">
-            <ListLink link="/" title="Home" />
-            <ListLink link="/layanan" title="Layanan" />
-            {user && <ListLink link="/booking" title="Booking" />}
-            <ListLink link="/tentang" title="Tentang" />
-            <ListLink link="/kontak" title="Kontak" />
+            {user?.role !== "admin" && (
+              <>
+                <ListLink link="/" title="Home" />
+                <ListLink link="/layanan" title="Layanan" />
+                {user && <ListLink link="/booking" title="Booking" />}
+                <ListLink link="/tentang" title="Tentang" />
+                <ListLink link="/kontak" title="Kontak" />
+              </>
+            )}
 
             {isMenuOpen && (
               <button

@@ -19,9 +19,9 @@ export const handleLogin = async (dataUser) => {
       return { status: false, message: "Password anda salah" };
     }
 
-    localStorage.setItem("user", JSON.stringify(data));
+    localStorage.setItem("user", JSON.stringify(data[0]));
 
-    return { status: true, message: "Berhasil Login" };
+    return { status: true, message: "Berhasil Login", role: data[0].role };
   } catch (error) {
     console.log({ error });
 

@@ -11,6 +11,7 @@ import BookingPage from "./pages/booking.jsx";
 import PrivateRoute from "./components/privateRoute.jsx";
 import Kontak from "./pages/kontak.jsx";
 import Riwayat from "./pages/riwayat.jsx";
+import Dashboard from "./pages/dashboard.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -19,6 +20,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       {/* <-- bungkus App dengan BrowserRouter */}
       <Routes>
         <Route path="/" element={<App />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/layanan" element={<LayananKami />} />
         <Route path="/tentang" element={<Tentangkami />} />
         <Route path="/kontak" element={<Kontak />} />

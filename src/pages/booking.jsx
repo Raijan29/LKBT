@@ -6,6 +6,8 @@ import { Alert, useHandleAlert } from "sstra-alert";
 
 import { FaClipboardList } from "react-icons/fa";
 
+import { insertData } from "../db/app/app";
+
 const BookingSection = () => {
   const [serviceType, setServiceType] = useState("");
   const [formData, setFormData] = useState({
@@ -50,8 +52,6 @@ const BookingSection = () => {
   const queryParams = new URLSearchParams(location.search);
   const layanan = queryParams.get("layanan");
 
-  console.log({ user });
-
   const { status, data, handleAlert } = useHandleAlert();
 
   const handleServiceChange = (e) => {
@@ -66,7 +66,7 @@ const BookingSection = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!user) {
@@ -97,6 +97,7 @@ const BookingSection = () => {
         dataBooking = {
           ...dataBooking,
           ...valueJasaPelatih,
+          type: serviceType,
         };
         break;
       }
@@ -104,6 +105,7 @@ const BookingSection = () => {
         dataBooking = {
           ...dataBooking,
           ...valueSewaCostum,
+          type: serviceType,
         };
         break;
       }
@@ -112,6 +114,7 @@ const BookingSection = () => {
         dataBooking = {
           ...dataBooking,
           ...valueJasaMakeup,
+          type: serviceType,
         };
         break;
       }
@@ -121,13 +124,18 @@ const BookingSection = () => {
         break;
     }
 
-    console.log({ dataBooking });
-    setTimeout(() => {
-      handleAlert(
-        "success",
-        "Booking berhasil terkirim, silahkan tunggu konfirmasi dari admin"
-      );
-    }, 2000);
+    const { status } = await insertData(dataBooking, serviceType);
+    console.log("insertData", dataBooking);
+
+    console.log({ status });
+    if (status === "error") {
+      handleAlert("error", "Gagal mengirim booking, silahkan coba lagi");
+      return;
+    }
+    handleAlert(
+      "success",
+      "Booking berhasil terkirim, silahkan tunggu konfirmasi dari admin"
+    );
   };
 
   const renderDynamicFields = () => {

@@ -36,7 +36,7 @@ const LoginSection = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    const { status, message } = await handleLogin(value);
+    const { status, message, role } = await handleLogin(value);
 
     if (!status) {
       handleAlert("error", message);
@@ -44,7 +44,12 @@ const LoginSection = () => {
       return;
     }
 
-    navigate("/booking");
+    if (role === "admin") {
+      navigate("/dashboard");
+    } else {
+      navigate("/booking");
+    }
+
     setIsLoading(false);
   };
 
