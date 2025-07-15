@@ -69,7 +69,7 @@ export default function Headers() {
               </button>
             )}
 
-            {user !== "undefined" ? (
+            {user && user.nama ? (
               <button
                 className="flex items-center gap-1"
                 onClick={() => setIsMenuOpen((isMenuOpen) => !isMenuOpen)}
@@ -77,6 +77,7 @@ export default function Headers() {
                 <div className="w-[35px] h-[35px] flex justify-center items-center rounded-full bg-gray-200">
                   <p>
                     {user.nama
+                      .split(" ")
                       .map((word) => word[0]?.toUpperCase())
                       .slice(0, 2)
                       .join("")}
@@ -91,7 +92,7 @@ export default function Headers() {
                 to={"/login"}
                 className="text-gray-700 hover:text-primary capitalize font-bold"
               >
-                {user ? user.nama : "Login/Daftar"}
+                Login/Daftar
               </Link>
             )}
           </div>

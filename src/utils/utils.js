@@ -1,7 +1,11 @@
-export const getUserLogin = () => {
-  const locUser = JSON.parse(localStorage.getItem("user"));
-  return locUser;
-};
+export function getUserLogin() {
+  const user = localStorage.getItem("user");
+  try {
+    return user ? JSON.parse(user) : null;
+  } catch (err) {
+    return null;
+  }
+}
 
 export function formatBookingDateTime(bookingDate, bookingTime) {
   const bulanIndonesia = [
