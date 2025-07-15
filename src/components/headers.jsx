@@ -69,7 +69,7 @@ export default function Headers() {
               </button>
             )}
 
-            {user && user.nama ? (
+            {user !== "undefined" ? (
               <button
                 className="flex items-center gap-1"
                 onClick={() => setIsMenuOpen((isMenuOpen) => !isMenuOpen)}
