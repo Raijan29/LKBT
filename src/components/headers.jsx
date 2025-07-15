@@ -77,7 +77,6 @@ export default function Headers() {
                 <div className="w-[35px] h-[35px] flex justify-center items-center rounded-full bg-gray-200">
                   <p>
                     {user.nama
-                      .split(" ")
                       .map((word) => word[0]?.toUpperCase())
                       .slice(0, 2)
                       .join("")}
