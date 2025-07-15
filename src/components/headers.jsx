@@ -69,7 +69,7 @@ export default function Headers() {
               </button>
             )}
 
-            {user ? (
+            {user && user.nama ? (
               <button
                 className="flex items-center gap-1"
                 onClick={() => setIsMenuOpen((isMenuOpen) => !isMenuOpen)}
@@ -78,7 +78,7 @@ export default function Headers() {
                   <p>
                     {user.nama
                       .split(" ")
-                      .map((word) => word[0].toUpperCase())
+                      .map((word) => word[0]?.toUpperCase())
                       .slice(0, 2)
                       .join("")}
                   </p>
